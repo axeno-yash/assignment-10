@@ -1,0 +1,139 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+* {
+  font-family: system-ui, -apple-system;
+}
+
+.text-big {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.text-middle {
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.text-small {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.icon {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.dark-gray-bold {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #5D5D5D;
+}
+
+.icons {
+  width: 30px;
+  height: 30px;
+}
+
+.btn {
+  outline: none;
+  border: none;
+  color: #000000;
+  background-color: transparent;
+}
+
+.list {
+  list-style: none;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: normal;
+  align-items: normal;
+  flex-wrap: nowrap;
+  gap: 0;
+  width: 17.5rem;
+  border-right: 0.0625rem solid #EFEFEF;
+  height: 100vh;
+  padding: 1.25rem;
+  overflow-y: scroll;
+}
+.sidebar .sidebar__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: normal;
+  flex-wrap: nowrap;
+  gap: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+.sidebar .sidebar__header .sidebar__right {
+  display: flex;
+  flex-direction: row;
+  justify-content: normal;
+  align-items: normal;
+  flex-wrap: nowrap;
+  gap: 0.875rem;
+}
+.sidebar .sidebar__panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: normal;
+  align-items: normal;
+  flex-wrap: nowrap;
+  gap: 0.875rem;
+  margin: 2.5rem 0;
+}
+.sidebar .sidebar__panel .panel__list {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: normal;
+  flex-wrap: nowrap;
+  gap: 0.3125rem;
+}
+.sidebar .sidebar__convo-groups .convo-groups__heading {
+  padding: 0.625rem 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: normal;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0.125rem;
+}
+.sidebar .convo-group {
+  padding: 0.3125rem 0;
+}
+.sidebar .convo-group .convo-group__title {
+  color: #8F8F8F;
+  padding-bottom: 0.1875rem;
+}
+.sidebar .convo-group .convo-group__list {
+  display: flex;
+  flex-direction: column;
+  justify-content: normal;
+  align-items: normal;
+  flex-wrap: nowrap;
+  gap: 0.3125rem;
+}
+.sidebar .convo-group .convo-group__list .convo-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.625rem;
+}
+.sidebar .convo-group .convo-group__list .convo-item:hover {
+  background-color: #EFEFEF;
+}
+
+/*# sourceMappingURL=main.css.map */

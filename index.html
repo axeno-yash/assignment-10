@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatgpt</title>
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+
+<body>
+    <aside class="sidebar">
+        <section class="sidebar__header">
+            <span class="sidebar__head text-big">ChatGPT</span>
+            <div class="sidebar__right">
+                <button class="btn icon-btn">
+                    <img class="icon" src="./assets/icons/search.svg" alt="">
+                </button>
+                <button class="btn icon-btn">
+                    <img class="icon" src="./assets/icons/sidebar.svg" alt="">
+                </button>
+            </div>
+        </section>
+
+        <nav class="sidebar__panel">
+            <button class="btn panel__list">
+                <img class="icon" src="./assets/icons/new-chat.svg" alt="">
+                <span class="text-middle">New Chat</span>
+            </button>
+            <button class="btn panel__list">
+                <img class="icon" src="./assets/icons/library.svg" alt="">
+                <span class="text-middle">Library</span>
+            </button>
+            <button class="btn panel__list">
+                <img class="icon" src="./assets/icons/more.svg" alt="">
+                <span class="text-middle">More</span>
+            </button>
+        </nav>
+
+        <section class="sidebar__convo-groups">
+            <heading class="convo-groups__heading">
+                <h3 class="dark-gray-bold convo-head">Chats</h3> 
+                <img class="icon" src="./assets/icons/key-down.svg" alt="chevron-down-ic">
+            </heading>
+            <section class="convo-group">
+                <h4 class="convo-group__title text-middle">Today</h4>
+                <ul class="convo-group__list">
+
+                    <li class="list convo-item convo-item--active">
+                        <button class="btn convo-item__link">
+                            <span class="convo-item__title text-middle">ChatGPT UI Recreation</span>
+                        </button>
+                        <button class="btn convo-item__more">
+                            <img class="icon" src="./assets/icons/more.svg" alt="">
+                        </button>
+                    </li>
+
+                    <li class="list convo-item">
+                        <button class="btn convo-item__link">
+                            <span class="convo-item__title text-middle">SCSS Typography Mixins</span>
+                        </button>
+                        <button class="btn convo-item__more">
+                            <img class="icon" src="./assets/icons/more.svg" alt="">
+                        </button>
+                    </li>
+
+                </ul>
+            </section>
+            <section class="convo-group">
+                <h4 class="convo-group__title text-middle">Yesterday</h4>
+                <ul class="convo-group__list">
+                    <li class="list convo-item">
+                        <button class="btn convo-item__link">
+                            <span class="convo-item__title text-middle">Use TTF Font Globally</span>
+                        </button>
+                        <button class="btn convo-item__more">
+                            <img class="icon" src="./assets/icons/more.svg" alt="">
+                        </button>
+                    </li>
+                </ul>
+            </section>
+            <section class="convo-group">
+                <h4 class="convo-group__title text-middle">Previous 7 Days</h4>
+                <ul class="convo-group__list"></ul>
+            </section>
+        </section>
+    </aside>
+    <main>
+        <header class="chat__header">
+
+        </header>
+        <section class="chat__main-chat">
+            <div class="chat__convo-area"></div>
+            <div class="chat__message-composer"></div>
+        </section>
+
+        <script src="main.js"></script>
+    </main>
+</body>
+
+</html>

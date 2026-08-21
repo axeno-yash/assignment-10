@@ -1,0 +1,17 @@
+@use "../abstracts/variables" as *;
+
+.icons{
+    width: 30px;
+    height: 30px;
+}
+
+.btn{
+    outline: none;
+    border: none;
+    color: $primary;
+    background-color: transparent;
+}
+
+.list{
+    list-style: none;
+}

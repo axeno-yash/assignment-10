@@ -1,0 +1,54 @@
+@use "../abstracts/functions" as *;
+@use "../abstracts/mixins" as *;
+@use "../abstracts/variables" as *;
+
+.sidebar {
+    @include flexbox($direction: column);
+    width: to-rem(280);
+    border-right: to-rem(1) solid $light-gray;
+    height: 100vh;
+    padding: to-rem(20);
+    overflow-y: scroll;
+
+    .sidebar__header {
+        @include flexbox($justify: space-between);
+        @include text-big;
+        .sidebar__right {
+            @include flexbox($gap: to-rem(14));
+        }
+    }
+
+    .sidebar__panel {
+        @include flexbox($direction: column, $gap: to-rem(14));
+        margin: to-rem(40) 0;
+        .panel__list {
+            @include flexbox($justify: flex-start, $gap: to-rem(5));
+        }
+    }
+
+    .sidebar__convo-groups {
+        .convo-groups__heading {
+            padding: to-rem(10) 0;
+            @include flexbox($align: center, $gap: to-rem(2));
+        }
+    }
+
+    .convo-group {
+        padding: to-rem(5) 0;
+        .convo-group__title{
+            color: $light-opacity;
+            padding-bottom: to-rem(3);
+        }
+        .convo-group__list {
+            @include flexbox($direction: column, $gap: to-rem(5));
+            .convo-item {
+                @include flexbox($justify: space-between, $align: center);
+                padding: to-rem(4) to-rem(8);
+                border-radius: to-rem(10);
+            }
+            .convo-item:hover {
+                background-color: $light-gray;
+            }
+        }
+    }
+}

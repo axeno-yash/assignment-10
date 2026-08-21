@@ -1,0 +1,31 @@
+@use "./variables" as *;
+
+
+@mixin flexbox($direction: row, $justify: normal, $align: normal, $wrap: nowrap, $gap: 0) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+    flex-wrap: $wrap;
+    gap: $gap
+}
+
+@mixin font($size: $fs-16, $weight: $fw-400) {
+    font-size: $size;
+    font-weight: $weight;
+}
+
+@mixin text-big {
+  font-size: $fs-18;
+  font-weight: $fw-600;
+}
+
+@mixin text-middle {
+  font-size: $fs-14;
+  font-weight: $fw-400;
+}
+
+@mixin text-small {
+  font-size: $fs-12;
+  font-weight: $fw-500;
+}

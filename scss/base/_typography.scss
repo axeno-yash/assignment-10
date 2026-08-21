@@ -1,0 +1,31 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+@use "../abstracts/functions" as *;
+
+* {
+    font-family:
+        system-ui,
+        -apple-system;
+}
+
+.text-big {
+    @include text-big;
+}
+
+.text-middle {
+    @include text-middle;
+}
+
+.text-small {
+    @include text-small;
+}
+
+.icon {
+    width: to-rem(18);
+    height: to-rem(18);
+}
+
+.dark-gray-bold {
+    @include font($size: $fs-14, $weight: $fw-500);
+    color: $dark-opacity;
+}
