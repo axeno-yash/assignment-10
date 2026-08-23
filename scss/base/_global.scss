@@ -1,17 +1,23 @@
 @use "../abstracts/variables" as *;
 
-.icons{
+.icons {
     width: 30px;
     height: 30px;
 }
 
-.btn{
+.btn {
     outline: none;
     border: none;
     color: $primary;
     background-color: transparent;
 }
 
-.list{
+.list {
     list-style: none;
+}
+
+svg {
+    width: to-rem(25);
+    height: to-rem(25);
+    fill: currentColor;
 }

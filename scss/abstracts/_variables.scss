@@ -1,4 +1,4 @@
-@use "./functions";
+@use "./functions" as *;
 
 $primary: #000000;
 $secondary: #ffffff;
@@ -8,6 +8,7 @@ $light-gray: #EFEFEF;
 $blue: #3A83F7;
 $red: #FF002A;
 $red-bg: #FA423E;
+$name-tag: #b49255;
 
 $fs-10: 0.625rem;
 $fs-12: 0.75rem;
@@ -23,10 +24,13 @@ $fs-40: 2.5rem;
 $fs-48: 3rem;
 $fs-64: 4rem;
 
+$fw-100: 100;
 $fw-400: 400;
 $fw-500: 500;
 $fw-600: 600;
 $fw-700: 700;
+$fw-bold: bold;
 
+$mobile: to-rem(640);
 $tablet: to-rem(768);
 $desktop: to-rem(1200);

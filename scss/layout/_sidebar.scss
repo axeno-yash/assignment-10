@@ -3,51 +3,202 @@
 @use "../abstracts/variables" as *;
 
 .sidebar {
+    position: fixed;
+    transform: translateX(-100%);
+    z-index: 100;
+
     @include flexbox($direction: column);
     width: to-rem(280);
     border-right: to-rem(1) solid $light-gray;
     height: 100vh;
-    padding: to-rem(20);
-    overflow-y: scroll;
+    padding-left: to-rem(20);
+    background-color: $secondary;
 
-    .sidebar__header {
+    &__header {
+        padding: to-rem(20) to-rem(20) 0 0;
         @include flexbox($justify: space-between);
         @include text-big;
         .sidebar__right {
             @include flexbox($gap: to-rem(14));
-        }
-    }
-
-    .sidebar__panel {
-        @include flexbox($direction: column, $gap: to-rem(14));
-        margin: to-rem(40) 0;
-        .panel__list {
-            @include flexbox($justify: flex-start, $gap: to-rem(5));
-        }
-    }
-
-    .sidebar__convo-groups {
-        .convo-groups__heading {
-            padding: to-rem(10) 0;
-            @include flexbox($align: center, $gap: to-rem(2));
-        }
-    }
-
-    .convo-group {
-        padding: to-rem(5) 0;
-        .convo-group__title{
-            color: $light-opacity;
-            padding-bottom: to-rem(3);
-        }
-        .convo-group__list {
-            @include flexbox($direction: column, $gap: to-rem(5));
-            .convo-item {
-                @include flexbox($justify: space-between, $align: center);
-                padding: to-rem(4) to-rem(8);
-                border-radius: to-rem(10);
+            .sidebar-close {
+                cursor: pointer;
             }
-            .convo-item:hover {
+        }
+        position: sticky;
+        top: 0;
+        background-color: $secondary;
+    }
+
+    &__scroll-area {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        .sidebar__panel {
+            @include flexbox($direction: column, $gap: to-rem(16));
+            margin: to-rem(40) 0;
+            .panel__list {
+                @include flexbox($justify: flex-start, $gap: to-rem(5));
+            }
+        }
+
+        .sidebar__convo-groups {
+            .convo-groups__heading {
+                padding: to-rem(10) 0;
+                @include flexbox($align: center, $gap: to-rem(2));
+            }
+        }
+
+        .convo-group {
+            padding: to-rem(5) 0;
+            .convo-group__title {
+                color: $light-opacity;
+                padding-bottom: to-rem(3);
+            }
+            .convo-group__list {
+                @include flexbox($direction: column, $gap: to-rem(7));
+                .convo-item {
+                    @include flexbox($justify: space-between, $align: center);
+                    border-radius: to-rem(10);
+                    padding: to-rem(10);
+                }
+                .convo-item:hover {
+                    background-color: $light-gray;
+                }
+            }
+        }
+    }
+
+    &__footer {
+        position: relative;
+        padding: to-rem(10) 0;
+        background-color: $secondary;
+
+        .sidebar-account-toggle {
+            width: 100%;
+            cursor: pointer;
+            @include flexbox($gap: to-rem(10), $align: center);
+            padding: to-rem(10) to-rem(5);
+
+            .sidebar__name-icon {
+                border-radius: 50%;
+                background-color: $name-tag;
+                color: $secondary;
+                padding: to-rem(5);
+                @include font($weight: $fw-100, $size: $fs-10);
+            }
+
+            .tiny-free {
+                color: $light-opacity;
+                text-align: left;
+                @include font($weight: $fw-100, $size: $fs-12);
+            }
+
+            &__chevron {
+                margin-left: auto;
+                @include font($size: $fs-28, $weight: $fw-400);
+            }
+        }
+
+        .sidebar-account-menu {
+            position: absolute;
+            right: to-rem(12);
+            bottom: calc(100% - to-rem(10));
+            left: 0;
+            z-index: 110;
+            padding: to-rem(8);
+            border: to-rem(1) solid $light-gray;
+            border-radius: to-rem(16);
+            background-color: $secondary;
+            box-shadow: 0 to-rem(10) to-rem(28) rgba($primary, 0.12);
+        }
+
+        .sidebar-account-menu__item {
+            width: 100%;
+            padding: to-rem(11) to-rem(12);
+            border-radius: to-rem(8);
+            text-align: left;
+            cursor: pointer;
+            @include font($size: $fs-16, $weight: $fw-400);
+
+            &:hover {
                 background-color: $light-gray;
+            }
+        }
+
+        .icon-btn {
+            @include flexbox($gap: to-rem(5), $justify: center, $align: center);
+            width: 95%;
+            padding: to-rem(10) to-rem(20);
+            border: to-rem(1) solid $light-gray;
+            border-radius: to-rem(20);
+        }
+    }
+
+    &.is-open {
+        transform: translateX(0);
+
+        & ~ .chat .sidebar-toggle {
+            display: none;
+        }
+    }
+}
+
+.drawer-overlay {
+    position: fixed;
+    inset: 0;
+    border: none;
+    background: $primary;
+    z-index: 90;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+
+    &.is-visible {
+        opacity: 0.1;
+        pointer-events: auto;
+    }
+}
+
+@media (min-width: $tablet) {
+    .app-shell {
+        display: flex;
+        min-height: 100vh;
+    }
+    
+    .sidebar {
+        position: static;
+        transform: none;
+        flex: 0 0 auto;
+        width: 0;
+        padding-left: 0;
+        border-right: 0;
+        overflow: hidden;
+
+        &.is-open {
+            width: to-rem(280);
+            padding-left: to-rem(20);
+            border-right: to-rem(1) solid $light-gray;
+
+            & ~ .chat .settings-modal {
+                left: to-rem(280);
+            }
+        }
+    }
+    
+    .drawer-overlay {
+        display: none;
+    }
+
+}
+
+@media (min-width: $desktop) {
+    .sidebar {
+        width: to-rem(280);
+        padding-left: to-rem(20);
+        border-right: to-rem(1) solid $light-gray;
+        .sidebar__right {
+            .sidebar-close {
+                display: none;
             }
         }
     }

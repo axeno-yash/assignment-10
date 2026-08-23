@@ -1,0 +1,93 @@
+@use "../abstracts/functions" as *;
+@use "../abstracts/mixins" as *;
+@use "../abstracts/variables" as *;
+
+.settings-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    @include flexbox($align: center, $justify: center);
+
+    &[hidden] {
+        display: none;
+    }
+
+    &__backdrop {
+        position: absolute;
+        inset: 0;
+        border: 0;
+        background-color: rgba($primary, 0.32);
+        cursor: default;
+    }
+
+    &__panel {
+        position: relative;
+        z-index: 1;
+        width: 85%;
+        overflow: hidden;
+        border-radius: to-rem(18);
+        background-color: $secondary;
+        box-shadow: 0 to-rem(20) to-rem(60) rgba($primary, 0.2);
+    }
+
+    &__header {
+        padding: to-rem(20) to-rem(24);
+        border-bottom: to-rem(1) solid $light-gray;
+        @include flexbox($align: center, $justify: space-between);
+
+        h2 {
+            @include font($size: $fs-24, $weight: $fw-600);
+        }
+    }
+
+    &__close {
+        width: to-rem(32);
+        height: to-rem(32);
+        border-radius: 50%;
+        cursor: pointer;
+        @include font($size: $fs-28, $weight: $fw-400);
+    }
+
+    &__nav {
+        padding: to-rem(12);
+        border-bottom: to-rem(1) solid $light-gray;
+        @include flexbox($wrap: wrap, $gap: to-rem(6));
+    }
+
+    &__nav-item {
+        padding: to-rem(8) to-rem(12);
+        border: 0;
+        border-radius: to-rem(8);
+        background: transparent;
+        color: $dark-opacity;
+        cursor: pointer;
+        @include font($size: $fs-14, $weight: $fw-500);
+
+        &.is-active,
+        &:hover {
+            background-color: $light-gray;
+            color: $primary;
+        }
+    }
+
+    &__content {
+        min-height: to-rem(210);
+        padding: to-rem(28) to-rem(24);
+
+        h3 {
+            margin-bottom: to-rem(8);
+            @include font($size: $fs-20, $weight: $fw-600);
+        }
+
+        p {
+            color: $dark-opacity;
+            @include font($size: $fs-16, $weight: $fw-400);
+        }
+    }
+}
+
+@media (min-width: $desktop) {
+    .settings-modal {
+        left: to-rem(280);
+    }
+}

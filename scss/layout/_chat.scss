@@ -1,0 +1,186 @@
+@use "../abstracts/functions" as *;
+@use "../abstracts/mixins" as *;
+@use "../abstracts/variables" as *;
+
+.chat {
+    width: 100%;
+    min-height: 100vh;
+    background-color: $secondary;
+
+    &__header {
+        min-height: to-rem(72);
+        padding: to-rem(16) to-rem(30);
+        @include flexbox($align: center);
+    }
+
+    .sidebar-toggle {
+        @include flexbox($align: center, $justify: center);
+        width: to-rem(40);
+        height: to-rem(40);
+        cursor: pointer;
+
+        .icon {
+            width: to-rem(22);
+            height: to-rem(22);
+        }
+    }
+
+    &__header-actions {
+        margin-left: auto;
+        @include flexbox($align: center, $gap: to-rem(22));
+    }
+
+    .upgrade-button,
+    .source-link {
+        @include flexbox($align: center, $gap: to-rem(6));
+        color: $blue;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .upgrade-button {
+        @include font($size: $fs-16, $weight: $fw-600);
+    }
+
+    .source-link {
+        color: $primary;
+    }
+
+    &__main-chat {
+        padding: to-rem(105) to-rem(20) to-rem(48);
+    }
+
+    &__welcome {
+        width: min(100%, to-rem(720));
+        margin: 0 auto;
+
+        h1 {
+            text-align: center;
+            @include font($size: $fs-24, $weight: $fw-400);
+        }
+    }
+
+    .message-composer {
+        min-height: to-rem(56);
+        margin-top: to-rem(30);
+        padding: to-rem(8) to-rem(10) to-rem(8) to-rem(16);
+        border: to-rem(1) solid $light-gray;
+        border-radius: to-rem(30);
+        box-shadow: 0 to-rem(12) to-rem(32) rgba($primary, 0.07);
+        @include flexbox($align: center, $gap: to-rem(10));
+
+        &__input {
+            min-width: 0;
+            flex: 1;
+            border: 0;
+            outline: 0;
+            color: $primary;
+            @include font($size: $fs-16, $weight: $fw-400);
+
+            &::placeholder {
+                color: $light-opacity;
+            }
+        }
+
+        &__actions {
+            @include flexbox($align: center, $gap: to-rem(10));
+        }
+    }
+
+    .composer-button {
+        width: to-rem(36);
+        height: to-rem(36);
+        color: $primary;
+        cursor: pointer;
+        @include flexbox($align: center, $justify: center);
+
+        &--model {
+            width: 76%;
+            padding: 0 to-rem(6);
+            color: $light-opacity;
+            @include flexbox($align: center);
+            @include font($size: $fs-16, $weight: $fw-400);
+        }
+
+        &--execute {
+            border-radius: 50%;
+            background-color: $blue;
+            color: $secondary;
+        }
+    }
+
+    &__suggestions {
+        margin: to-rem(58) 0 0 to-rem(28);
+        @include flexbox($direction: column, $align: flex-start, $gap: to-rem(34));
+    }
+
+    .suggestion-button {
+        color: $light-opacity;
+        cursor: pointer;
+        @include flexbox($align: center, $gap: to-rem(24));
+        @include font($size: $fs-20, $weight: $fw-400);
+    }
+}
+
+@media (min-width: $tablet) {
+    .chat {
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+@media (min-width: $desktop) {
+    .chat {
+        .sidebar-toggle {
+            display: none;
+        }
+    }
+}
+
+@media (max-width: $mobile) {
+    .chat {
+        &__header {
+            padding: to-rem(12) to-rem(16);
+        }
+
+        .upgrade-button {
+            @include font($size: $fs-16, $weight: $fw-600);
+        }
+
+        &__header-actions {
+            gap: to-rem(12);
+        }
+
+        &__welcome h1 {
+            @include font($size: $fs-24, $weight: $fw-400);
+        }
+
+        &__main-chat {
+            padding-top: to-rem(72);
+        }
+
+        .message-composer {
+            min-height: to-rem(56);
+            margin-top: to-rem(26);
+            padding-left: to-rem(14);
+            gap: to-rem(4);
+
+            &__input {
+                @include font($size: $fs-16, $weight: $fw-400);
+            }
+        }
+
+        .composer-button--model {
+            display: none;
+        }
+
+        &__suggestions {
+            margin: to-rem(42) 0 0 to-rem(12);
+            gap: to-rem(24);
+        }
+
+        .suggestion-button {
+            @include font($size: $fs-18, $weight: $fw-400);
+        }
+    }
+}

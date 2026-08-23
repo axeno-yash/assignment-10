@@ -1,7 +1,7 @@
 @use "./variables" as *;
 
 
-@mixin flexbox($direction: row, $justify: normal, $align: normal, $wrap: nowrap, $gap: 0) {
+@mixin flexbox($direction: null, $justify: null, $align: null, $wrap: null, $gap: null) {
     display: flex;
     flex-direction: $direction;
     justify-content: $justify;
