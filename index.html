@@ -25,7 +25,7 @@
             </header>
             <div class="sidebar__scroll-area">
                 <section class="sidebar__panel">
-                    <button class="btn panel__list">
+                    <button class="btn panel__list" id="new-chat-button" type="button">
                         <img class="icon" src="./assets/icons/new-chat.svg" alt="chat-ic">
                         <span class="text-middle">New Chat</span>
                     </button>
@@ -48,82 +48,9 @@
                         <h4 class="convo-group__title text-middle">Today</h4>
                         <ul class="convo-group__list">
                             <li class="list convo-item">
-                                <button class="btn convo-item__link">
-                                    <span class="convo-item__title text-middle">SCSS Typography Mixins</span>
+                                <button class="btn convo-item__link" data-conversation="text" type="button">
+                                    <span class="convo-item__title text-middle">var vs let vs const in JavaScript</span>
                                 </button>
-                                <div class="convo-item__right">
-                                    <button class="btn convo-item__more">
-                                        <img class="icon" src="./assets/icons/pin.svg" alt="pin-icon">
-                                    </button>
-                                    <button class="btn convo-item__more">
-                                        <img class="icon" src="./assets/icons/more.svg" alt="more-icon">
-                                    </button>
-                                </div>
-                            </li>
-                            <li class="list convo-item">
-                                <button class="btn convo-item__link">
-                                    <span class="convo-item__title text-middle">SCSS Typography Mixins</span>
-                                </button>
-                                <div class="convo-item__right">
-                                    <button class="btn convo-item__more">
-                                        <img class="icon" src="./assets/icons/pin.svg" alt="pin-icon">
-                                    </button>
-                                    <button class="btn convo-item__more">
-                                        <img class="icon" src="./assets/icons/more.svg" alt="more-icon">
-                                    </button>
-                                </div>
-                            </li>
-                            <li class="list convo-item">
-                                <button class="btn convo-item__link">
-                                    <span class="convo-item__title text-middle">SCSS Typography Mixins</span>
-                                </button>
-                                <div class="convo-item__right">
-                                    <button class="btn convo-item__more">
-                                        <img class="icon" src="./assets/icons/pin.svg" alt="pin-icon">
-                                    </button>
-                                    <button class="btn convo-item__more">
-                                        <img class="icon" src="./assets/icons/more.svg" alt="more-icon">
-                                    </button>
-                                </div>
-                            </li>
-                            <li class="list convo-item">
-                                <button class="btn convo-item__link">
-                                    <span class="convo-item__title text-middle">SCSS Typography Mixins</span>
-                                </button>
-                                <div class="convo-item__right">
-                                    <button class="btn convo-item__more">
-                                        <img class="icon" src="./assets/icons/pin.svg" alt="pin-icon">
-                                    </button>
-                                    <button class="btn convo-item__more">
-                                        <img class="icon" src="./assets/icons/more.svg" alt="more-icon">
-                                    </button>
-                                </div>
-                            </li>
-                            <li class="list convo-item">
-                                <button class="btn convo-item__link">
-                                    <span class="convo-item__title text-middle">SCSS Typography Mixins</span>
-                                </button>
-                                <div class="convo-item__right">
-                                    <button class="btn convo-item__more">
-                                        <img class="icon" src="./assets/icons/pin.svg" alt="pin-icon">
-                                    </button>
-                                    <button class="btn convo-item__more">
-                                        <img class="icon" src="./assets/icons/more.svg" alt="more-icon">
-                                    </button>
-                                </div>
-                            </li>
-                            <li class="list convo-item convo-item--active">
-                                <button class="btn convo-item__link">
-                                    <span class="convo-item__title text-middle">SCSS Typography Mixins</span>
-                                </button>
-                                <div class="convo-item__right">
-                                    <button class="btn convo-item__more">
-                                        <img class="icon" src="./assets/icons/pin.svg" alt="pin-icon">
-                                    </button>
-                                    <button class="btn convo-item__more">
-                                        <img class="icon" src="./assets/icons/more.svg" alt="more-icon">
-                                    </button>
-                                </div>
                             </li>
                         </ul>
                     </section>
@@ -131,17 +58,9 @@
                         <h4 class="convo-group__title text-middle">Yesterday</h4>
                         <ul class="convo-group__list">
                             <li class="list convo-item">
-                                <button class="btn convo-item__link">
-                                    <span class="convo-item__title text-middle">SCSS Typography Mixins</span>
+                                <button class="btn convo-item__link" data-conversation="table" type="button">
+                                    <span class="convo-item__title text-middle">Frontend framework comparison</span>
                                 </button>
-                                <div class="convo-item__right">
-                                    <button class="btn convo-item__more">
-                                        <img class="icon" src="./assets/icons/pin.svg" alt="pin-icon">
-                                    </button>
-                                    <button class="btn convo-item__more">
-                                        <img class="icon" src="./assets/icons/more.svg" alt="more-icon">
-                                    </button>
-                                </div>
                             </li>
                         </ul>
                     </section>
@@ -149,30 +68,19 @@
                         <h4 class="convo-group__title text-middle">Previous 7 Days</h4>
                         <ul class="convo-group__list">
                             <li class="list convo-item">
-                                <button class="btn convo-item__link">
-                                    <span class="convo-item__title text-middle">SCSS Typography Mixins</span>
+                                <button class="btn convo-item__link" data-conversation="links" type="button">
+                                    <span class="convo-item__title text-middle">Modern CSS learning resources</span>
                                 </button>
-                                <div class="convo-item__right">
-                                    <button class="btn convo-item__more">
-                                        <img class="icon" src="./assets/icons/pin.svg" alt="pin-icon">
-                                    </button>
-                                    <button class="btn convo-item__more">
-                                        <img class="icon" src="./assets/icons/more.svg" alt="more-icon">
-                                    </button>
-                                </div>
                             </li>
                             <li class="list convo-item">
-                                <button class="btn convo-item__link">
-                                    <span class="convo-item__title text-middle">SCSS Typography Mixins</span>
+                                <button class="btn convo-item__link" data-conversation="code" type="button">
+                                    <span class="convo-item__title text-middle">TypeScript debounce function</span>
                                 </button>
-                                <div class="convo-item__right">
-                                    <button class="btn convo-item__more">
-                                        <img class="icon" src="./assets/icons/pin.svg" alt="pin-icon">
-                                    </button>
-                                    <button class="btn convo-item__more">
-                                        <img class="icon" src="./assets/icons/more.svg" alt="more-icon">
-                                    </button>
-                                </div>
+                            </li>
+                            <li class="list convo-item">
+                                <button class="btn convo-item__link" data-conversation="lists" type="button">
+                                    <span class="convo-item__title text-middle">Clean code principles</span>
+                                </button>
                             </li>
                         </ul>
                     </section>
@@ -223,29 +131,36 @@
                 </div>
             </header>
             <section class="chat__main-chat">
-                <div class="chat__welcome">
-                    <h1 id="welcome-title">What’s on your mind today?</h1>
-                    <form class="message-composer" action="#">
-                        <button class="btn composer-button composer-button--attach" type="button">
-                            <img class="icon" src="./assets/icons/plus.svg" alt="plus-icon">
-                        </button>
-                        <input class="message-composer__input" type="text" placeholder="Ask anything">
-                        <div class="message-composer__actions">
-                            <button class="btn composer-button composer-button--model" type="button">
-                                <img src="./assets/icons/model.svg" alt="model-icon">
-                                <select class="btn composer-button composer-button--model">
-                                    <option value="" disabled selected>Model</option>
-                                    <option value="fast">Fast&nbsp;&nbsp;</option>
-                                    <option value="balanced">Balanced&nbsp;&nbsp;</option>
-                                    <option value="reasoning">Reasoning&nbsp;&nbsp;</option>
-                                </select>
-                            </button>
-                            <button class="btn composer-button composer-button--execute" type="button">
-                                <img src="./assets/icons/up-arrow.svg" alt="up-arrow-icon">
-                            </button>
-                        </div>
-                    </form>
+                <div class="chat__convo-area" id="convo-area">
+                    <div class="chat__welcome" id="welcome-state">
+                        <h1 id="welcome-title">What's on your mind today?</h1>
+                        <div class="chat__suggestions" id="prompt-suggestions" aria-label="Prompt suggestions"></div>
+                    </div>
+                    <ul class="conversation__messages" id="messages-list"></ul>
                 </div>
+                <form class="message-composer" id="composer-form">
+                    <button class="btn composer-button composer-button--attach" type="button"
+                        aria-label="Add attachment">
+                        <img class="icon" src="./assets/icons/plus.svg" alt="plus-icon">
+                    </button>
+                    <textarea class="message-composer__input" id="composer-input" rows="1"
+                        placeholder="Ask anything"></textarea>
+                    <div class="message-composer__actions">
+                        <div class="composer-button composer-button--model">
+                            <img src="./assets/icons/model.svg" alt="model-ixon">
+                            <select id="model-select" aria-label="Select model">
+                                <option value="" selected disabled>Model</option>
+                                <option value="fast">Fast</option>
+                                <option value="balanced">Balanced</option>
+                                <option value="reasoning">Reasoning</option>
+                            </select>
+                        </div>
+                        <button class="btn composer-button composer-button--execute" type="submit" id="composer-send"
+                            aria-label="Send message">
+                            <img src="./assets/icons/up-arrow.svg" alt="up-arrow-icon">
+                        </button>
+                    </div>
+                </form>
             </section>
 
             <section class="settings-modal" aria-modal="true" role="dialog" hidden>
@@ -263,8 +178,8 @@
                         <button class="settings-modal__nav-item" type="button">Notifications</button>
                     </nav>
                     <div class="settings-modal__content">
-                        <h3>Profile</h3>
-                        <p>Manage your profile, preferences, and account settings.</p>
+                        <h3 class="content__head">Profile</h3>
+                        <p class="content__para">Manage your profile, preferences, and account settings.</p>
                     </div>
                 </div>
             </section>

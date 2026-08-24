@@ -2,13 +2,15 @@
 
 $primary: #000000;
 $secondary: #ffffff;
-$light-opacity: #8F8F8F;
-$dark-opacity: #5D5D5D;
-$light-gray: #EFEFEF;
-$blue: #3A83F7;
-$red: #FF002A;
-$red-bg: #FA423E;
+$light-opacity: #8f8f8f;
+$dark-opacity: #5d5d5d;
+$light-gray: #efefef;
+$blue: #3a83f7;
 $name-tag: #b49255;
+$table-bg: #f7f7f7;
+$code-bg: #242424;
+$copy-bg: #3c3c3c;
+$yellow-border: yellow;
 
 $fs-10: 0.625rem;
 $fs-12: 0.75rem;
@@ -18,18 +20,11 @@ $fs-18: 1.125rem;
 $fs-20: 1.25rem;
 $fs-24: 1.5rem;
 $fs-28: 1.75rem;
-$fs-32: 2rem;
-$fs-36: 2.25rem;
-$fs-40: 2.5rem;
-$fs-48: 3rem;
-$fs-64: 4rem;
 
 $fw-100: 100;
 $fw-400: 400;
 $fw-500: 500;
 $fw-600: 600;
-$fw-700: 700;
-$fw-bold: bold;
 
 $mobile: to-rem(640);
 $tablet: to-rem(768);

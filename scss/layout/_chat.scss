@@ -4,10 +4,14 @@
 
 .chat {
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
+    min-height: 0;
+    overflow: hidden;
+    @include flexbox($direction: column);
     background-color: $secondary;
 
     &__header {
+        flex: 0 0 auto;
         min-height: to-rem(72);
         padding: to-rem(16) to-rem(30);
         @include flexbox($align: center);
@@ -47,20 +51,38 @@
     }
 
     &__main-chat {
-        padding: to-rem(105) to-rem(20) to-rem(48);
+        @include flexbox($direction: column);
+        flex: 1;
+        min-height: 0;
+        padding: 0 to-rem(20);
+    }
+
+    &__convo-area {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        @include flexbox($direction: column);
     }
 
     &__welcome {
         width: min(100%, to-rem(720));
         margin: 0 auto;
 
-        h1 {
+        #welcome-title {
             text-align: center;
             @include font($size: $fs-24, $weight: $fw-400);
         }
     }
 
+    .conversation__messages {
+        width: min(100%, to-rem(720));
+        margin: 0 auto;
+        list-style: none;
+    }
+
     .message-composer {
+        width: min(100%, to-rem(800));
+        align-self: center;
         min-height: to-rem(56);
         margin-top: to-rem(30);
         padding: to-rem(8) to-rem(10) to-rem(8) to-rem(16);
@@ -74,6 +96,8 @@
             flex: 1;
             border: 0;
             outline: 0;
+            resize: none;
+            overflow: hidden;
             color: $primary;
             @include font($size: $fs-16, $weight: $fw-400);
 
@@ -94,11 +118,19 @@
         cursor: pointer;
         @include flexbox($align: center, $justify: center);
 
+        &--attach {
+            color: $light-opacity;
+
+            &.is-active {
+                color: $blue;
+            }
+        }
+
         &--model {
             width: 76%;
             padding: 0 to-rem(6);
             color: $light-opacity;
-            @include flexbox($align: center);
+            @include flexbox($align: center, $gap: to-rem(6));
             @include font($size: $fs-16, $weight: $fw-400);
         }
 
@@ -106,6 +138,10 @@
             border-radius: 50%;
             background-color: $blue;
             color: $secondary;
+
+            &.is-stop {
+                background-color: $primary;
+            }
         }
     }
 
@@ -118,8 +154,15 @@
         color: $light-opacity;
         cursor: pointer;
         @include flexbox($align: center, $gap: to-rem(24));
-        @include font($size: $fs-20, $weight: $fw-400);
+        @include font($size: $fs-18, $weight: $fw-400);
     }
+}
+
+.composer-stop-icon {
+    width: to-rem(12);
+    height: to-rem(12);
+    border-radius: to-rem(2);
+    background: $secondary;
 }
 
 @media (min-width: $tablet) {
@@ -151,16 +194,7 @@
             gap: to-rem(12);
         }
 
-        &__welcome h1 {
-            @include font($size: $fs-24, $weight: $fw-400);
-        }
-
-        &__main-chat {
-            padding-top: to-rem(72);
-        }
-
         .message-composer {
-            min-height: to-rem(56);
             margin-top: to-rem(26);
             padding-left: to-rem(14);
             gap: to-rem(4);

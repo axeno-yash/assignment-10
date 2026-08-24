@@ -1,0 +1,46 @@
+@use "../abstracts/functions" as *;
+@use "../abstracts/variables" as *;
+
+.code-block {
+    margin: to-rem(14) 0 to-rem(18);
+    border: 1px solid $yellow-border;
+    border-radius: to-rem(12);
+    overflow: hidden;
+    background: $primary;
+    color: $secondary;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: to-rem(8) to-rem(12);
+        background: $code-bg;
+    }
+
+    &__language {
+        color: $secondary;
+        font-size: $fs-12;
+    }
+
+    &__copy {
+        border: 0;
+        border-radius: to-rem(6);
+        background: transparent;
+        color: $secondary;
+        cursor: pointer;
+        padding: to-rem(4) to-rem(6);
+        font-size: $fs-12;
+
+        &:hover,
+        &:focus-visible {
+            background: $copy-bg;
+        }
+    }
+
+    &__body {
+        overflow-x: auto;
+        padding: to-rem(14);
+        margin: 0;
+        font-size: $fs-14;
+    }
+}

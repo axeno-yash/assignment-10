@@ -1,0 +1,86 @@
+@use "../abstracts/functions" as *;
+@use "../abstracts/mixins" as *;
+@use "../abstracts/variables" as *;
+
+.message {
+    max-width: 70%;
+    margin-bottom: to-rem(16);
+
+    &--user {
+        margin-left: auto;
+        background: $light-gray;
+        padding: to-rem(10) to-rem(16);
+        border-radius: to-rem(16);
+    }
+
+    &--assistant {
+        margin-right: auto;
+        max-width: 100%;
+    }
+
+    &--loading {
+        display: flex;
+        gap: to-rem(4);
+    }
+
+    .message__dot {
+        width: to-rem(6);
+        height: to-rem(6);
+        border-radius: 50%;
+        background: $light-opacity;
+    }
+
+    &__paragraph {
+        margin-bottom: to-rem(14);
+    }
+
+    &__heading {
+        margin: to-rem(20) 0 to-rem(8);
+        font-size: $fs-18;
+    }
+
+    &__list {
+        padding-left: to-rem(24);
+        margin: 0 0 to-rem(16);
+        list-style-type: disc;
+    }
+
+    &__list-item {
+        display: list-item;
+        align-items: flex-start;
+        gap: to-rem(6);
+    }
+
+    &__link {
+        color: $blue;
+    }
+
+    &__actions {
+        display: flex;
+        gap: to-rem(4);
+        margin-top: to-rem(8);
+        opacity: 0;
+        transition: opacity 0.18s ease;
+    }
+
+    &:hover &__actions,
+    &__actions:focus-within {
+        opacity: 1;
+    }
+
+    &__action {
+        border: 0;
+        border-radius: to-rem(8);
+        background: transparent;
+        color: $dark-opacity;
+        cursor: pointer;
+        font-size: $fs-12;
+        padding: to-rem(6) to-rem(8);
+
+        &:hover,
+        &.is-active {
+            background: $light-gray;
+            color: $primary;
+        }
+    }
+}

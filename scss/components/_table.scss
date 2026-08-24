@@ -1,0 +1,19 @@
+@use "../abstracts/functions" as *;
+@use "../abstracts/variables" as *;
+
+.message-table {
+    width: 100%;
+    margin: to-rem(14) 0 to-rem(18);
+    font-size: $fs-14;
+
+    th,
+    td {
+        padding: to-rem(9) to-rem(12);
+        border: 1px solid $light-gray;
+        text-align: left;
+    }
+    th {
+        background: $table-bg;
+        font-weight: $fw-600;
+    }
+}

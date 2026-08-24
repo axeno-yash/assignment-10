@@ -8,7 +8,7 @@
     z-index: 100;
 
     @include flexbox($direction: column);
-    width: to-rem(280);
+    width: to-rem(260);
     border-right: to-rem(1) solid $light-gray;
     height: 100vh;
     padding-left: to-rem(20);
@@ -61,7 +61,8 @@
                     border-radius: to-rem(10);
                     padding: to-rem(10);
                 }
-                .convo-item:hover {
+                .convo-item:hover,
+                .convo-item.is-active {
                     background-color: $light-gray;
                 }
             }
@@ -91,6 +92,11 @@
                 color: $light-opacity;
                 text-align: left;
                 @include font($weight: $fw-100, $size: $fs-12);
+            }
+
+            .sidebar__name {
+                @include font($size: $fs-14, $weight: $fw-500);
+                color: $primary;
             }
 
             &__chevron {
@@ -164,7 +170,7 @@
         display: flex;
         min-height: 100vh;
     }
-    
+
     .sidebar {
         position: static;
         transform: none;
@@ -184,16 +190,15 @@
             }
         }
     }
-    
+
     .drawer-overlay {
         display: none;
     }
-
 }
 
 @media (min-width: $desktop) {
     .sidebar {
-        width: to-rem(280);
+        width: to-rem(260);
         padding-left: to-rem(20);
         border-right: to-rem(1) solid $light-gray;
         .sidebar__right {

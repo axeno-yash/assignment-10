@@ -4,7 +4,10 @@
 @use "./base/typography";
 @use "./base/global";
 
-@use "./layout/header";
 @use "./layout/sidebar";
 @use "./layout/chat";
+
 @use "./components/modal";
+@use "./components/message";
+@use "./components/code-block";
+@use "./components/table";

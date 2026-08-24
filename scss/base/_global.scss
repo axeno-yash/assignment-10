@@ -1,9 +1,5 @@
 @use "../abstracts/variables" as *;
-
-.icons {
-    width: 30px;
-    height: 30px;
-}
+@use "../abstracts/mixins" as *;
 
 .btn {
     outline: none;
@@ -20,4 +16,28 @@ svg {
     width: to-rem(25);
     height: to-rem(25);
     fill: currentColor;
+}
+
+select {
+    border: none;
+    background: none;
+    color: $light-opacity;
+    @include font($size: $fs-16, $weight: $fw-400);
+}
+
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+.app-shell {
+    height: 100vh;
+    overflow: hidden;
+}
+
+button{
+    outline: none;
+    background-color: transparent;
+    border: none;
 }

@@ -23,7 +23,7 @@
     &__panel {
         position: relative;
         z-index: 1;
-        width: 85%;
+        width: min(calc(100% - to-rem(32)), to-rem(720));
         overflow: hidden;
         border-radius: to-rem(18);
         background-color: $secondary;
@@ -35,7 +35,7 @@
         border-bottom: to-rem(1) solid $light-gray;
         @include flexbox($align: center, $justify: space-between);
 
-        h2 {
+        #settings-title {
             @include font($size: $fs-24, $weight: $fw-600);
         }
     }
@@ -74,12 +74,12 @@
         min-height: to-rem(210);
         padding: to-rem(28) to-rem(24);
 
-        h3 {
+        .content__head {
             margin-bottom: to-rem(8);
             @include font($size: $fs-20, $weight: $fw-600);
         }
 
-        p {
+        .content__para {
             color: $dark-opacity;
             @include font($size: $fs-16, $weight: $fw-400);
         }
