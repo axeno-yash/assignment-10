@@ -26,13 +26,13 @@ export function initChat() {
     } else {
       content.forEach((block) => msg.append(renderBlock(block)));
       const actions = document.createElement("div");
-      actions.className = "message-actions";
+      actions.className = "message__actions";
       actions.innerHTML = `
-        <button data-action="copy" title="Copy">Copy</button>
-        <button data-action="like" title="Like">👍</button>
-        <button data-action="dislike" title="Dislike">👎</button>
-        <button data-action="regenerate" title="Regenerate">↻</button>
-        <button data-action="more" title="More">More</button>
+        <button class="message__action" data-action="copy" title="Copy">Copy</button>
+        <button class="message__action" data-action="like" title="Like">👍</button>
+        <button class="message__action" data-action="dislike" title="Dislike">👎</button>
+        <button class="message__action" data-action="regenerate" title="Regenerate">↻</button>
+        <button class="message__action" data-action="more" title="More">More</button>
       `;
       msg.append(actions);
     }
@@ -54,8 +54,18 @@ export function initChat() {
     sendBtn.classList.add("is-stop");
     sendBtn.innerHTML = '<span class="composer-stop-icon"></span>';
 
-    const loading = addMessage("assistant", [{ type: "text", value: "..." }]);
-    loading.classList.add("loading");
+    const loading = document.createElement("div");
+    loading.className = "message message--assistant message--loading";
+    loading.dataset.messageIndex = messages.length;
+    loading.innerHTML = `
+      <span class="message__dot"></span>
+      <span class="message__dot"></span>
+      <span class="message__dot"></span>
+    `;
+    messagesList.append(loading);
+    messages.push({ role: "assistant", content: [{ type: "text", value: "..." }] });
+    welcome.hidden = true;
+    loading.scrollIntoView({ behavior: "smooth", block: "end" });
 
     generationTimer = setTimeout(() => {
       clearTimeout(generationTimer);
@@ -77,7 +87,7 @@ export function initChat() {
     clearTimeout(generationTimer);
     generationTimer = null;
 
-    const loading = messagesList.querySelector(".loading");
+    const loading = messagesList.querySelector(".message--loading");
     if (loading) {
       loading.remove();
       messages.pop();
@@ -139,7 +149,7 @@ export function initChat() {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const text = input.value.trim();
-    
+
     if (!text) return;
     if (isGenerating) {
       stop();
@@ -202,7 +212,7 @@ export function initChat() {
       msg.content.forEach((block) =>
         msgEl.insertBefore(
           renderBlock(block),
-          msgEl.querySelector(".message-actions"),
+          msgEl.querySelector(".message__actions"),
         ),
       );
     } else if (btn.dataset.action === "more") {

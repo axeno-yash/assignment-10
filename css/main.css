@@ -626,8 +626,8 @@ button {
   display: flex;
   gap: 0.25rem;
   margin-top: 0.5rem;
-  opacity: 0;
-  transition: opacity 0.18s ease;
+  width: fit-content;
+  padding: 0.3125rem 0.9375rem;
 }
 .message:hover .message__actions, .message__actions:focus-within {
   opacity: 1;

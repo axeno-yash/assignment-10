@@ -59,8 +59,8 @@
         display: flex;
         gap: to-rem(4);
         margin-top: to-rem(8);
-        opacity: 0;
-        transition: opacity 0.18s ease;
+        width: fit-content;
+        padding: to-rem(5) to-rem(15);
     }
 
     &:hover &__actions,
