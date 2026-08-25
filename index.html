@@ -15,13 +15,14 @@
             <header class="sidebar__header">
                 <span class="sidebar__head text-big">ChatGPT</span>
                 <div class="sidebar__right">
-                    <button class="btn icon-btn">
+                    <button class="btn icon-btn" id="sidebar-search-btn" type="button" aria-label="Search chats">
                         <img class="icon" src="./assets/icons/search.svg" alt="search-ic">
                     </button>
                     <button class="btn icon-btn sidebar-close">
                         <img class="icon" src="./assets/icons/sidebar.svg" alt="sidebar-ic">
                     </button>
                 </div>
+                <input type="search" class="sidebar__search-input" id="sidebar-search" placeholder="Search chats..." hidden>
             </header>
             <div class="sidebar__scroll-area">
                 <section class="sidebar__panel">
@@ -51,6 +52,11 @@
                                 <button class="btn convo-item__link" data-conversation="text" type="button">
                                     <span class="convo-item__title text-middle">var vs let vs const in JavaScript</span>
                                 </button>
+                                <div class="convo-item__actions">
+                                    <button class="btn convo-item__more" type="button" aria-label="More options">
+                                        <img class="icon" src="./assets/icons/more.svg" alt="more-icon">
+                                    </button>
+                                </div>
                             </li>
                         </ul>
                     </section>
@@ -61,6 +67,11 @@
                                 <button class="btn convo-item__link" data-conversation="table" type="button">
                                     <span class="convo-item__title text-middle">Frontend framework comparison</span>
                                 </button>
+                                <div class="convo-item__actions">
+                                    <button class="btn convo-item__more" type="button" aria-label="More options">
+                                        <img class="icon" src="./assets/icons/more.svg" alt="more-icon">
+                                    </button>
+                                </div>
                             </li>
                         </ul>
                     </section>
@@ -71,16 +82,31 @@
                                 <button class="btn convo-item__link" data-conversation="links" type="button">
                                     <span class="convo-item__title text-middle">Modern CSS learning resources</span>
                                 </button>
+                                <div class="convo-item__actions">
+                                    <button class="btn convo-item__more" type="button" aria-label="More options">
+                                        <img class="icon" src="./assets/icons/more.svg" alt="more-icon">
+                                    </button>
+                                </div>
                             </li>
                             <li class="list convo-item">
                                 <button class="btn convo-item__link" data-conversation="code" type="button">
                                     <span class="convo-item__title text-middle">TypeScript debounce function</span>
                                 </button>
+                                <div class="convo-item__actions">
+                                    <button class="btn convo-item__more" type="button" aria-label="More options">
+                                        <img class="icon" src="./assets/icons/more.svg" alt="more-icon">
+                                    </button>
+                                </div>
                             </li>
                             <li class="list convo-item">
                                 <button class="btn convo-item__link" data-conversation="lists" type="button">
                                     <span class="convo-item__title text-middle">Clean code principles</span>
                                 </button>
+                                <div class="convo-item__actions">
+                                    <button class="btn convo-item__more" type="button" aria-label="More options">
+                                        <img class="icon" src="./assets/icons/more.svg" alt="more-icon">
+                                    </button>
+                                </div>
                             </li>
                         </ul>
                     </section>
@@ -139,26 +165,30 @@
                     <ul class="conversation__messages" id="messages-list"></ul>
                 </div>
                 <form class="message-composer" id="composer-form">
-                    <button class="btn composer-button composer-button--attach" type="button"
-                        aria-label="Add attachment">
-                        <img class="icon" src="./assets/icons/plus.svg" alt="plus-icon">
-                    </button>
-                    <textarea class="message-composer__input" id="composer-input" rows="1"
-                        placeholder="Ask anything"></textarea>
-                    <div class="message-composer__actions">
-                        <div class="composer-button composer-button--model">
-                            <img src="./assets/icons/model.svg" alt="model-ixon">
-                            <select id="model-select" aria-label="Select model">
-                                <option value="" selected disabled>Model</option>
-                                <option value="fast">Fast</option>
-                                <option value="balanced">Balanced</option>
-                                <option value="reasoning">Reasoning</option>
-                            </select>
-                        </div>
-                        <button class="btn composer-button composer-button--execute" type="submit" id="composer-send"
-                            aria-label="Send message">
-                            <img src="./assets/icons/up-arrow.svg" alt="up-arrow-icon">
+                    <input type="file" id="file-input" hidden>
+                    <div class="composer-attachments" id="composer-attachments" hidden></div>
+                    <div class="message-composer__row">
+                        <button class="btn composer-button composer-button--attach" type="button"
+                            aria-label="Add attachment">
+                            <img class="icon" src="./assets/icons/plus.svg" alt="plus-icon">
                         </button>
+                        <textarea class="message-composer__input" id="composer-input" rows="1"
+                            placeholder="Ask anything"></textarea>
+                        <div class="message-composer__actions">
+                            <div class="composer-button composer-button--model">
+                                <img src="./assets/icons/model.svg" alt="model-ixon">
+                                <select id="model-select" aria-label="Select model">
+                                    <option value="" selected disabled>Model</option>
+                                    <option value="fast">Fast</option>
+                                    <option value="balanced">Balanced</option>
+                                    <option value="reasoning">Reasoning</option>
+                                </select>
+                            </div>
+                            <button class="btn composer-button composer-button--execute" type="submit" id="composer-send"
+                                aria-label="Send message">
+                                <img src="./assets/icons/up-arrow.svg" alt="up-arrow-icon">
+                            </button>
+                        </div>
                     </div>
                 </form>
             </section>
@@ -185,6 +215,16 @@
             </section>
 
         </main>
+    </div>
+    <div class="convo-menu" id="convo-menu" hidden>
+        <button class="btn convo-menu__item" data-action="rename" type="button">
+            <img class="icon" src="./assets/icons/rename.svg" alt="rename-icon">
+            <span>Rename</span>
+        </button>
+        <button class="btn convo-menu__item convo-menu__item--delete" data-action="delete" type="button">
+            <img class="icon" src="./assets/icons/delete.svg" alt="delete-icon">
+            <span>Delete</span>
+        </button>
     </div>
     <script type="module" src="./js/main.js"></script>
 </body>

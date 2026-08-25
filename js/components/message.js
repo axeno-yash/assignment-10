@@ -1,91 +1,51 @@
-function formatInline(text) {
+function formatBold(text) {
+  const parts = text.split("**");
+  if (parts.length === 1) return text;
+
+  return parts
+    .map((part, index) => (index % 2 === 1 ? `<strong>${part}</strong>` : part))
+    .join("");
+}
+
+function formatLinks(text) {
   let result = text;
 
-  while (result.includes("**")) {
-    const start = result.indexOf("**");
-    const end = result.indexOf("**", start + 2);
+  while (result.includes("[") && result.includes("](") && result.includes(")")) {
+    const start = result.indexOf("[");
+    const middle = result.indexOf("](", start);
+    const end = result.indexOf(")", middle);
 
-    if (end === -1) break;
+    if (start === -1 || middle === -1 || end === -1) break;
 
-    const boldText = result.slice(start + 2, end);
+    const label = result.slice(start + 1, middle);
+    const url = result.slice(middle + 2, end);
+    const linkHtml = `<a href="${url}" class="message__link" target="_blank" rel="noopener">${label}</a>`;
 
-    result = result.slice(0, start) + "<strong>" + boldText + "</strong>" + result.slice(end + 2);
-  }
-
-  while (result.includes("](")) {
-    const linkStart = result.lastIndexOf("[", result.indexOf("]("));
-    const textEnd = result.indexOf("](", linkStart);
-
-    if (linkStart === -1 || textEnd === -1) break;
-
-    const urlEnd = result.indexOf(")", textEnd);
-
-    if (urlEnd === -1) break;
-
-    const linkText = result.slice(linkStart + 1, textEnd);
-    const url = result.slice(textEnd + 2, urlEnd);
-
-    const link = '<a href="' + url + '" class="message__link" target="_blank" rel="noopener">' + linkText + "</a>";
-
-    result = result.slice(0, linkStart) + link + result.slice(urlEnd + 1);
+    result = result.slice(0, start) + linkHtml + result.slice(end + 1);
   }
 
   return result;
 }
 
-function stripListMarker(line) {
-  const text = line.trim();
-
-  if (text.startsWith("- ") || text.startsWith("* ")) {
-    return text.slice(2);
-  }
-
-  const dotIndex = text.indexOf(". ");
-
-  if (dotIndex > 0) {
-    const number = text.slice(0, dotIndex);
-
-    let isNumber = true;
-
-    for (const char of number) {
-      if (char < "0" || char > "9") {
-        isNumber = false;
-        break;
-      }
-    }
-
-    if (isNumber) {
-      return text.slice(dotIndex + 2);
-    }
-  }
-
-  return text;
+function formatInline(text) {
+  return formatLinks(formatBold(text));
 }
 
-function getHeadingLevel(line) {
-  const text = line.trim();
+function stripListMarker(line) {
+  const trimmed = line.trim();
 
-  if (text.startsWith("### ")) {
-    return {
-      level: 4,
-      text: text.slice(4),
-    };
+  if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
+    return trimmed.slice(2);
   }
 
-  if (text.startsWith("## ")) {
-    return {
-      level: 3,
-      text: text.slice(3),
-    };
-  }
+  return trimmed;
+}
 
-  if (text.startsWith("# ")) {
-    return {
-      level: 2,
-      text: text.slice(2),
-    };
-  }
-
+function getHeading(line) {
+  const trimmed = line.trim();
+  if (trimmed.startsWith("### ")) return { tag: "h4", text: trimmed.slice(4) };
+  if (trimmed.startsWith("## ")) return { tag: "h3", text: trimmed.slice(3) };
+  if (trimmed.startsWith("# ")) return { tag: "h2", text: trimmed.slice(2) };
   return null;
 }
 
@@ -97,135 +57,85 @@ export function renderBlock(block) {
     case "text": {
       const chunks = block.value.split("\n\n");
 
-      chunks.forEach((chunk) => {
-        if (!chunk.trim()) return;
+      div.innerHTML = chunks
+        .map((chunk) => {
+          const trimmed = chunk.trim();
+          if (!trimmed) return "";
 
-        const lines = chunk.split("\n");
-        const heading = getHeadingLevel(lines[0]);
-
-        if (heading) {
-          const h = document.createElement(`h${heading.level}`);
-          h.className = "message__heading";
-          h.innerHTML = formatInline(heading.text);
-          div.append(h);
-
-          const rest = lines.slice(1).join(" ").trim();
-
-          if (rest) {
-            const p = document.createElement("p");
-            p.className = "message__paragraph";
-            p.innerHTML = formatInline(rest);
-            div.append(p);
+          const heading = getHeading(trimmed);
+          if (heading) {
+            return `<${heading.tag} class="message__heading">${formatInline(heading.text)}</${heading.tag}>`;
           }
-        } else {
-          const p = document.createElement("p");
-          p.className = "message__paragraph";
-          p.innerHTML = formatInline(lines.join(" "));
-          div.append(p);
-        }
-      });
 
-      break;
-    }
-
-    case "code": {
-      const wrapper = document.createElement("div");
-      wrapper.className = "code-block";
-
-      const header = document.createElement("div");
-      header.className = "code-block__header";
-
-      const langLabel = document.createElement("span");
-      langLabel.className = "code-block__language";
-      langLabel.textContent = block.language || "plaintext";
-
-      const copyBtn = document.createElement("button");
-      copyBtn.className = "code-block__copy";
-      copyBtn.type = "button";
-      copyBtn.textContent = "Copy";
-
-      copyBtn.addEventListener("click", () => {
-        navigator.clipboard.writeText(block.value).then(() => {
-          copyBtn.textContent = "Copied!";
-
-          setTimeout(() => {
-            copyBtn.textContent = "Copy";
-          }, 1500);
-        });
-      });
-
-      header.append(langLabel, copyBtn);
-
-      const pre = document.createElement("pre");
-      pre.className = "code-block__body";
-
-      const code = document.createElement("code");
-
-      if (block.language) {
-        code.className = `language-${block.language}`;
-      }
-
-      code.textContent = block.value;
-
-      pre.append(code);
-      wrapper.append(header, pre);
-      div.append(wrapper);
-
+          const paragraph = trimmed.split("\n").join(" ");
+          return `<p class="message__paragraph">${formatInline(paragraph)}</p>`;
+        })
+        .join("");
       break;
     }
 
     case "list": {
-      const listElem = document.createElement(block.ordered ? "ol" : "ul");
+      const tag = block.ordered ? "ol" : "ul";
+      const items = block.value
+        .split("\n")
+        .filter((line) => line.trim() !== "")
+        .map((line) => `<li class="message__list-item">${formatInline(stripListMarker(line))}</li>`)
+        .join("");
 
-      listElem.className = "message__list";
-
-      block.value.split("\n").forEach((line) => {
-        if (!line.trim()) return;
-
-        const li = document.createElement("li");
-        li.className = "message__list-item";
-        li.innerHTML = formatInline(stripListMarker(line));
-
-        listElem.append(li);
-      });
-
-      div.append(listElem);
-
+      div.innerHTML = `<${tag} class="message__list">${items}</${tag}>`;
       break;
     }
 
     case "table": {
-      const table = document.createElement("table");
-      table.className = "message-table";
+      const lines = block.value.trim().split("\n");
+      const validRows = lines.filter((line) => !line.includes("---"));
 
-      const rows = block.value.trim().split("\n");
-
-      const thead = document.createElement("thead");
-      const tbody = document.createElement("tbody");
-
-      rows.forEach((row, i) => {
-        const tr = document.createElement("tr");
-
+      const rows = validRows.map((row) =>
         row
           .split("|")
           .slice(1, -1)
-          .forEach((cell) => {
-            const elem = document.createElement(i === 0 ? "th" : "td");
+          .map((cell) => cell.trim())
+      );
 
-            elem.textContent = cell.trim();
-            tr.append(elem);
-          });
+      if (rows.length === 0) break;
 
-        if (i === 0) {
-          thead.append(tr);
-        } else {
-          tbody.append(tr);
-        }
+      const headerCells = rows[0].map((cell) => `<th>${formatInline(cell)}</th>`).join("");
+      const bodyRows = rows
+        .slice(1)
+        .map((row) => {
+          const cells = row.map((cell) => `<td>${formatInline(cell)}</td>`).join("");
+          return `<tr>${cells}</tr>`;
+        })
+        .join("");
+
+      div.innerHTML = `
+        <table class="message-table">
+          <thead><tr>${headerCells}</tr></thead>
+          <tbody>${bodyRows}</tbody>
+        </table>
+      `;
+      break;
+    }
+
+    case "code": {
+      const lang = block.language || "plaintext";
+      div.innerHTML = `
+        <div class="code-block">
+          <div class="code-block__header">
+            <span class="code-block__language">${lang}</span>
+            <button class="code-block__copy" type="button">Copy</button>
+          </div>
+          <pre class="code-block__body"><code class="language-${lang}">${block.value}</code></pre>
+        </div>
+      `;
+
+      const copyBtn = div.querySelector(".code-block__copy");
+      copyBtn.addEventListener("click", () => {
+        navigator.clipboard.writeText(block.value).then(() => {
+          copyBtn.textContent = "Copied!";
+          setTimeout(() => (copyBtn.textContent = "Copy"), 1500);
+        });
       });
-
-      table.append(thead, tbody);
-      div.append(table);
-
       break;
     }
   }

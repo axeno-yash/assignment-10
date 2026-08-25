@@ -1,6 +1,7 @@
 import { promptSuggestions, conversations } from "../data/conversations.js";
 import { pickResponse, regeneratedResponses } from "../data/responses.js";
 import { renderBlock } from "./message.js";
+import { initAttachments } from "./attachment.js";
 
 export function initChat() {
   const messagesList = document.querySelector("#messages-list");
@@ -11,37 +12,78 @@ export function initChat() {
   const input = document.querySelector("#composer-input");
   const sendBtn = document.querySelector("#composer-send");
 
-  let messages = [];
+  const attachments = initAttachments();
+
   let generationTimer = null;
   let regenIndex = 0;
   let isGenerating = false;
 
+  function setGenerating(active) {
+    isGenerating = active;
+    sendBtn.classList.toggle("is-stop", active);
+    sendBtn.innerHTML = active
+      ? '<span class="composer-stop-icon"></span>'
+      : '<img src="./assets/icons/up-arrow.svg" alt="">';
+  }
+
   function addMessage(role, content) {
     const msg = document.createElement("div");
     msg.className = `message message--${role}`;
-    msg.dataset.messageIndex = messages.length;
 
     if (role === "user") {
       msg.textContent = content;
     } else {
       content.forEach((block) => msg.append(renderBlock(block)));
+
       const actions = document.createElement("div");
       actions.className = "message__actions";
       actions.innerHTML = `
-        <button class="message__action" data-action="copy" title="Copy">Copy</button>
-        <button class="message__action" data-action="like" title="Like">👍</button>
-        <button class="message__action" data-action="dislike" title="Dislike">👎</button>
-        <button class="message__action" data-action="regenerate" title="Regenerate">↻</button>
-        <button class="message__action" data-action="more" title="More">More</button>
+        <button class="btn message__action" data-action="copy" title="Copy">
+          <img class="icon" src="./assets/icons/copy.svg" alt="copy-icon">
+        </button>
+        <button class="btn message__action" data-action="like" title="Good response">
+          <img class="icon" src="./assets/icons/like.svg" alt="like-icon">
+        </button>
+        <button class="btn message__action" data-action="dislike" title="Bad response">
+          <img class="icon" src="./assets/icons/dislike.svg" alt="dislike-icon">
+        </button>
+        <button class="btn message__action" data-action="regenerate" title="Regenerate">
+          <img class="icon" src="./assets/icons/regenerate.svg" alt="regenerate-icon">
+        </button>
+        <button class="btn message__action" data-action="more" title="More">
+          <img class="icon" src="./assets/icons/more.svg" alt="more-icon">
+        </button>
       `;
       msg.append(actions);
     }
 
     messagesList.append(msg);
-    messages.push({ role, content });
     welcome.hidden = true;
     msg.scrollIntoView({ behavior: "smooth", block: "end" });
+
     return msg;
+  }
+
+  function respond(text) {
+    setGenerating(true);
+
+    const loading = document.createElement("div");
+    loading.className = "message message--assistant message--loading";
+    loading.innerHTML = `
+      <span class="message__dot"></span>
+      <span class="message__dot"></span>
+      <span class="message__dot"></span>
+    `;
+
+    messagesList.append(loading);
+    welcome.hidden = true;
+    loading.scrollIntoView({ behavior: "smooth", block: "end" });
+
+    generationTimer = setTimeout(() => {
+      loading.remove();
+      addMessage("assistant", pickResponse(text));
+      setGenerating(false);
+    }, 850);
   }
 
   function send(text) {
@@ -49,73 +91,33 @@ export function initChat() {
     respond(text);
   }
 
-  function respond(text) {
-    isGenerating = true;
-    sendBtn.classList.add("is-stop");
-    sendBtn.innerHTML = '<span class="composer-stop-icon"></span>';
-
-    const loading = document.createElement("div");
-    loading.className = "message message--assistant message--loading";
-    loading.dataset.messageIndex = messages.length;
-    loading.innerHTML = `
-      <span class="message__dot"></span>
-      <span class="message__dot"></span>
-      <span class="message__dot"></span>
-    `;
-    messagesList.append(loading);
-    messages.push({ role: "assistant", content: [{ type: "text", value: "..." }] });
-    welcome.hidden = true;
-    loading.scrollIntoView({ behavior: "smooth", block: "end" });
-
-    generationTimer = setTimeout(() => {
-      clearTimeout(generationTimer);
-      generationTimer = null;
-      loading.remove();
-      messages.pop();
-
-      const response = pickResponse(text);
-      addMessage("assistant", response);
-
-      isGenerating = false;
-      sendBtn.classList.remove("is-stop");
-      sendBtn.innerHTML = '<img src="./assets/icons/up-arrow.svg" alt="">';
-    }, 850);
-  }
-
   function stop() {
     if (!isGenerating) return;
-    clearTimeout(generationTimer);
-    generationTimer = null;
 
-    const loading = messagesList.querySelector(".message--loading");
-    if (loading) {
-      loading.remove();
-      messages.pop();
-    }
+    clearTimeout(generationTimer);
+    document.querySelector(".message--loading")?.remove();
 
     addMessage("assistant", [
       {
         type: "text",
-        value:
-          "Generation stopped. You can continue with another message whenever you are ready.",
+        value: "Generation stopped. You can continue with another message whenever you are ready.",
       },
     ]);
 
-    isGenerating = false;
-    sendBtn.classList.remove("is-stop");
-    sendBtn.innerHTML = '<img src="./assets/icons/up-arrow.svg" alt="">';
+    setGenerating(false);
   }
 
   function loadConversation(key) {
     const convo = conversations[key] || conversations.text;
-    messages = [];
     messagesList.innerHTML = "";
     welcome.hidden = true;
+
     convo.forEach((m) => addMessage(m.role, m.content));
 
-    document
-      .querySelectorAll(".convo-item")
-      .forEach((item) => item.classList.remove("is-active"));
+    document.querySelectorAll(".convo-item").forEach((item) => {
+      item.classList.remove("is-active");
+    });
+
     document
       .querySelector(`[data-conversation="${key}"]`)
       ?.closest(".convo-item")
@@ -124,13 +126,10 @@ export function initChat() {
 
   function resetChat() {
     clearTimeout(generationTimer);
-    generationTimer = null;
-    messages = [];
+    attachments?.clear();
     messagesList.innerHTML = "";
     welcome.hidden = false;
-    isGenerating = false;
-    sendBtn.classList.remove("is-stop");
-    sendBtn.innerHTML = '<img src="./assets/icons/up-arrow.svg" alt="">';
+    setGenerating(false);
     input.focus();
   }
 
@@ -149,75 +148,61 @@ export function initChat() {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const text = input.value.trim();
+    const file = attachments?.getFile();
 
-    if (!text) return;
+    if (!text && !file) return;
+
     if (isGenerating) {
       stop();
       return;
     }
+
     input.value = "";
     input.style.height = "auto";
-    send(text);
+    attachments?.clear();
+    send(text || file.name);
   });
 
   sendBtn.addEventListener("click", () => {
     if (isGenerating) stop();
   });
 
-  document
-    .querySelector(".composer-button--attach")
-    .addEventListener("click", (btn) => {
-      btn.classList.add("is-active");
-      setTimeout(() => btn.classList.remove("is-active"), 350);
-    });
-
   messagesList.addEventListener("click", (e) => {
     const btn = e.target.closest("button");
+    const msgElem = btn?.closest(".message--assistant");
+    if (!btn || !msgElem) return;
 
-    if (!btn) return;
+    const action = btn.dataset.action;
 
-    const msgEl = btn.closest(".message--assistant");
-
-    if (!msgEl) return;
-
-    const idx = Number(msgEl.dataset.messageIndex);
-    const msg = messages[idx];
-
-    if (!msg) return;
-
-    if (btn.dataset.action === "copy") {
-      const text = msg.content.map((b) => b.value).join("\n");
+    if (action === "copy") {
+      const text = Array.from(msgElem.querySelectorAll(".message-block"))
+        .map((elem) => elem.innerText.trim())
+        .join("\n\n");
 
       navigator.clipboard.writeText(text);
+      const originalHtml = btn.innerHTML;
+      btn.innerHTML = `<span>Copied</span>`;
+      setTimeout(() => (btn.innerHTML = originalHtml), 1300);
+    }
 
-      const old = btn.textContent;
-
-      btn.textContent = "Copied";
-      setTimeout(() => (btn.textContent = old), 1300);
-
-    } else if (
-      btn.dataset.action === "like" ||
-      btn.dataset.action === "dislike"
-
-    ) {
-      msgEl
+    if (action === "like" || action === "dislike") {
+      msgElem
         .querySelectorAll('[data-action="like"], [data-action="dislike"]')
         .forEach((b) => b.classList.remove("is-active"));
       btn.classList.add("is-active");
-    } else if (btn.dataset.action === "regenerate") {
-      msg.content =
-        regeneratedResponses[regenIndex % regeneratedResponses.length];
+    }
+
+    if (action === "regenerate") {
+      const newResponse = regeneratedResponses[regenIndex % regeneratedResponses.length];
       regenIndex++;
-      msgEl.querySelectorAll(".message-block").forEach((el) => el.remove());
-      msg.content.forEach((block) =>
-        msgEl.insertBefore(
-          renderBlock(block),
-          msgEl.querySelector(".message__actions"),
-        ),
-      );
-    } else if (btn.dataset.action === "more") {
-      const saved = btn.classList.toggle("is-active");
-      btn.textContent = saved ? "Saved" : "More";
+
+      msgElem.querySelectorAll(".message-block").forEach((elem) => elem.remove());
+      const actions = msgElem.querySelector(".message__actions");
+      newResponse.forEach((block) => msgElem.insertBefore(renderBlock(block), actions));
+    }
+
+    if (action === "more") {
+      btn.classList.toggle("is-active");
     }
   });
 
@@ -226,12 +211,14 @@ export function initChat() {
     b.type = "button";
     b.className = "btn suggestion-button";
     b.textContent = s;
+
     b.onclick = () => {
       input.value = s;
       input.style.height = "auto";
       input.style.height = `${input.scrollHeight}px`;
       input.focus();
     };
+
     suggestions.append(b);
   });
 
@@ -239,7 +226,7 @@ export function initChat() {
 
   document.querySelectorAll(".convo-item__link").forEach((btn) => {
     btn.addEventListener("click", () =>
-      loadConversation(btn.dataset.conversation),
+      loadConversation(btn.dataset.conversation)
     );
   });
 }

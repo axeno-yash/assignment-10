@@ -17,13 +17,37 @@
     &__header {
         padding: to-rem(20) to-rem(20) 0 0;
         @include flexbox($justify: space-between);
+        flex-wrap: wrap;
         @include text-big;
+
         .sidebar__right {
             @include flexbox($gap: to-rem(14));
+
             .sidebar-close {
                 cursor: pointer;
             }
         }
+
+        .sidebar__search-input {
+            width: 100%;
+            margin-top: to-rem(10);
+            padding: to-rem(6) to-rem(10);
+            background-color: $light-gray;
+            border: to-rem(1) solid transparent;
+            border-radius: to-rem(8);
+            font-size: $fs-14;
+            color: $primary;
+            outline: none;
+
+            &:focus {
+                border-color: $light-opacity;
+            }
+
+            &[hidden] {
+                display: none;
+            }
+        }
+
         position: sticky;
         top: 0;
         background-color: $secondary;
@@ -33,11 +57,14 @@
         flex: 1;
         min-height: 0;
         overflow-y: auto;
+
         .sidebar__panel {
             @include flexbox($direction: column, $gap: to-rem(16));
             margin: to-rem(40) 0;
+
             .panel__list {
                 @include flexbox($justify: flex-start, $gap: to-rem(5));
+                cursor: pointer;
             }
         }
 
@@ -50,17 +77,65 @@
 
         .convo-group {
             padding: to-rem(5) 0;
+
             .convo-group__title {
                 color: $light-opacity;
                 padding-bottom: to-rem(3);
             }
+
             .convo-group__list {
                 @include flexbox($direction: column, $gap: to-rem(7));
+
                 .convo-item {
+                    position: relative;
                     @include flexbox($justify: space-between, $align: center);
                     border-radius: to-rem(10);
                     padding: to-rem(10);
+                    cursor: pointer;
+
+                    &[hidden] {
+                        display: none;
+                    }
+
+                    &__link {
+                        flex: 1;
+                        min-width: 0;
+                        cursor: pointer;
+                        text-align: left;
+                    }
+
+                    &__title {
+                        display: block;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+
+                    &__actions {
+                        display: flex;
+                        align-items: center;
+                        opacity: 0;
+                        visibility: hidden;
+                        margin-left: to-rem(6);
+                    }
+
+                    &:hover .convo-item__actions,
+                    &.is-active .convo-item__actions {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+
+                    &__more {
+                        @include flexbox($justify: center, $align: center);
+                        color: $dark-opacity;
+                        cursor: pointer;
+
+                        &:hover {
+                            color: $primary;
+                        }
+                    }
                 }
+
                 .convo-item:hover,
                 .convo-item.is-active {
                     background-color: $light-gray;
@@ -143,7 +218,7 @@
     &.is-open {
         transform: translateX(0);
 
-        & ~ .chat .sidebar-toggle {
+        &~.chat .sidebar-toggle {
             display: none;
         }
     }
@@ -185,7 +260,7 @@
             padding-left: to-rem(20);
             border-right: to-rem(1) solid $light-gray;
 
-            & ~ .chat .settings-modal {
+            &~.chat .settings-modal {
                 left: to-rem(280);
             }
         }
@@ -201,10 +276,45 @@
         width: to-rem(260);
         padding-left: to-rem(20);
         border-right: to-rem(1) solid $light-gray;
+
         .sidebar__right {
             .sidebar-close {
                 display: none;
             }
+        }
+    }
+}
+
+.convo-menu {
+    position: fixed;
+    z-index: 120;
+    min-width: to-rem(150);
+    background-color: $secondary;
+    border: to-rem(1) solid $light-gray;
+    border-radius: to-rem(14);
+    padding: to-rem(6);
+    box-shadow: 0 to-rem(8) to-rem(24) rgba($primary, 0.1);
+
+    &[hidden] {
+        display: none;
+    }
+
+    &__item {
+        width: 100%;
+        text-align: left;
+        padding: to-rem(8) to-rem(10);
+        @include font($size: $fs-14);
+        border-radius: to-rem(8);
+        cursor: pointer;
+        color: $primary;
+        @include flexbox($align: center, $gap: to-rem(10));
+
+        &:hover {
+            background-color: $light-gray;
+        }
+
+        &--delete {
+            color: $red;
         }
     }
 }

@@ -47,8 +47,6 @@
 
     &__list-item {
         display: list-item;
-        align-items: flex-start;
-        gap: to-rem(6);
     }
 
     &__link {
@@ -60,7 +58,7 @@
         gap: to-rem(4);
         margin-top: to-rem(8);
         width: fit-content;
-        padding: to-rem(5) to-rem(15);
+        padding: to-rem(5) 0;
     }
 
     &:hover &__actions,
@@ -69,12 +67,8 @@
     }
 
     &__action {
-        border: 0;
         border-radius: to-rem(8);
-        background: transparent;
         color: $dark-opacity;
-        cursor: pointer;
-        font-size: $fs-12;
         padding: to-rem(6) to-rem(8);
 
         &:hover,

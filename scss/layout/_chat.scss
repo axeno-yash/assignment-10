@@ -85,11 +85,16 @@
         align-self: center;
         min-height: to-rem(56);
         margin-top: to-rem(30);
-        padding: to-rem(8) to-rem(10) to-rem(8) to-rem(16);
+        padding: to-rem(10) to-rem(14);
         border: to-rem(1) solid $light-gray;
-        border-radius: to-rem(30);
+        border-radius: to-rem(24);
         box-shadow: 0 to-rem(12) to-rem(32) rgba($primary, 0.07);
-        @include flexbox($align: center, $gap: to-rem(10));
+        @include flexbox($direction: column, $gap: to-rem(8));
+
+        &__row {
+            width: 100%;
+            @include flexbox($align: center, $gap: to-rem(10));
+        }
 
         &__input {
             min-width: 0;
@@ -186,10 +191,6 @@
             padding: to-rem(12) to-rem(16);
         }
 
-        .upgrade-button {
-            @include font($size: $fs-16, $weight: $fw-600);
-        }
-
         &__header-actions {
             gap: to-rem(12);
         }
@@ -198,10 +199,6 @@
             margin-top: to-rem(26);
             padding-left: to-rem(14);
             gap: to-rem(4);
-
-            &__input {
-                @include font($size: $fs-16, $weight: $fw-400);
-            }
         }
 
         .composer-button--model {
@@ -211,10 +208,6 @@
         &__suggestions {
             margin: to-rem(42) 0 0 to-rem(12);
             gap: to-rem(24);
-        }
-
-        .suggestion-button {
-            @include font($size: $fs-18, $weight: $fw-400);
         }
     }
 }

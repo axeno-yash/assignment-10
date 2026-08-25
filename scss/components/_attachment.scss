@@ -1,0 +1,30 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/functions" as *;
+@use "../abstracts/mixins" as *;
+
+.composer-attachments {
+    @include flexbox($align: center, $gap: to-rem(8));
+    padding: to-rem(4) to-rem(8);
+    background-color: $light-gray;
+    border-radius: to-rem(8);
+    font-size: $fs-12;
+    color: $primary;
+    width: fit-content;
+
+    &[hidden] {
+        display: none;
+    }
+
+    #remove-file {
+        color: $dark-opacity;
+        padding: 0 to-rem(4);
+
+        &:hover {
+            color: $primary;
+        }
+    }
+
+    .attachment-error {
+        color: $red;
+    }
+}
