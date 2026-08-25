@@ -78,10 +78,17 @@ A responsive ChatGPT Web interface built with HTML, SCSS, and SCSS JavaScript.
 ## Application Interface Screenshots
 
 ![Image1](./demo/1.png)
+
 ![Image2](./demo/2.png)
+
 ![Image3](./demo/3.png)
+
 ![Image4](./demo/4.png)
+
 ![Image5](./demo/5.png)
+
 ![Image6](./demo/6.png)
+
 ![Image7](./demo/7.png)
+
 ![Image8](./demo/8.png)
